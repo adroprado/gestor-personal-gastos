@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Gestor de Gastos Personales</title>
+  </head>
+  <body>
+    <main class="contenedor">
+      <!-- ENCABEZADO -->
+      <header class="encabezado">
+        <h1>
+          <a href="#"
+            ><img src="./assets/github.svg" alt="repositorio-github" /></a
+          >Gestor de Gastos Personales
+        </h1>
+        <p>Controla tus finanzas de manera efectiva</p>
+      </header>
+
+      <!-- BARRA DE NAVEGACIÓN -->
+      <nav class="pestañas-navegacion">
+        <button class="btn-pestaña-gastos activo">Gastos</button>
+        <button class="btn-pestaña-estadisticas">Estadísticas</button>
+      </nav>
+
+      <!-- TABLA DE GASTOS -->
+      <section id="gastos" class="contenido-pestaña activo">
+        <article class="tarjeta">
+          <h2>Agregar Nuevo Gasto</h2>
+          <p class="mensaje-exito">Gasto agregado correctamente</p>
+          <!-- Lógica: variable que hace referencia al DOM "formulario-gastos". -->
+          <form class="formulario-gastos" autocomplete="off">
+            <div class="formulario-grid">
+              <div class="formulario-campo">
+                <label>Nombre del Gasto</label>
+                <input
+                  class="nombre"
+                  type="text"
+                  name="nombre"
+                  placeholder="Nombre de gasto"
+                  required
+                />
+                <span class="mensaje-error"
+                  >El nombre debe tener al menos 3 caracteres</span
+                >
+              </div>
+              <div class="formulario-campo">
+                <label>Monto $</label>
+                <input
+                  class="monto"
+                  type="text"
+                  name="monto"
+                  placeholder="Monto $"
+                  required
+                />
+                <span class="mensaje-error">El monto debe ser mayor a 0</span>
+              </div>
+            </div>
+            <input class="btn-agregar" type="submit" value="+ Agregar Gasto" />
+            <input type="hidden" name="id" />
+          </form>
+        </article>
+
+        <!-- TARJETA INFORMACIÓN DE GASTOS -->
+        <article class="tarjeta informacion-total">
+          <div class="informacion-tarjeta">
+            <div>
+              <!-- Lógica: variable que hace referencia al DOM "total-gastos", cambiar referencia a "total-gastos-monto" -->
+              <p class="informacion-texto">Total de Gastos</p>
+              <p class="informacion-monto">0</p>
+            </div>
+            <div>
+              <!-- Lógica: mostrar total de gastos agregados -->
+              <p class="informacion-texto">Registros</p>
+              <p class="informacion-registros">0</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- BUSCADOR DE GASTOS -->
+        <!-- Lógica: el usuario puede buscar gastos por texto -->
+        <article class="tarjeta">
+          <div class="buscador-campo">
+            <span class="buscador-icono">🔍</span>
+            <input type="text" placeholder="Buscar gasto..." />
+          </div>
+        </article>
+
+        <!-- LISTA DE GASTOS UI -->
+        <!-- Lógica: mostrar mensaje cuando no exista ningún gasto. Y ocultar cuando exista el primer gasto agregado -->
+        <article class="tarjeta">
+          <h2>Lista de Gastos</h2>
+          <div class="lista-gastos">
+            <!-- Lógica: si no hay gastos, mostrar mensaje. Si se inserta el primer gasto, desaparece mensaje, y agregamos plantilla de gastos en este div -->
+            <div class="estado-lista">
+              <p>No hay gastos registrados.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- TABLA DE ESTADÍSTICAS -->
+      <section id="estadisticas" class="contenido-pestaña">
+        <article class="estadisticas">
+          <h2>Gastos Mensuales</h2>
+          <!-- Lógica: colocar los valores totales de cada tarjeta -->
+          <div class="estadisticas-grid">
+            <div class="estadistica-tarjeta-azul">
+              <p class="estadistica-texto-azul">Total General</p>
+              <p class="estadistica-monto-azul">$0.00</p>
+            </div>
+            <div class="estadistica-tarjeta-verde">
+              <p class="estadistica-texto-verde">Promedio Mensual</p>
+              <p class="estadistica-promedio-mensual-verde">$0.00</p>
+            </div>
+            <div class="estadistica-tarjeta-morada">
+              <p class="estadistica-texto-morada">Total Gastos</p>
+              <p class="estadistica-gastos-morada">0</p>
+            </div>
+          </div>
+          <!-- Lógica: emplear librería Chart.js -->
+          <canvas class="chartCanvas"></canvas>
+          <div class="chart-estado-vacio">
+            <!-- Lógica: si no hay gastos, mostrar mensaje. Si se inserta el primer gasto, desaparece mensaje, y agregamos estadísticas de gastos en este div -->
+            <p>No hay datos para mostrar.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <!-- PLANTILLA QUE SE RENDERIZARA EN EL DOM -->
+    <!-- Lógica: variable que hace referencia al DOM "plantilla-fila-gastos", cambiar referencia a "contenedor-plantilla-gastos". Lo mismo hacemos para su contenido en las clases-->
+    <template class="contenedor-plantilla">
+      <div class="plantilla-nombre">
+        <span>Nombre:</span>
+        <!-- Lógica: agregar nombre del producto que ingresa el usuario-->
+      </div>
+      <div class="plantilla-monto">
+        <span>Monto:</span>
+        <!-- Lógica: agregar monto del producto que ingresa el usuario -->
+      </div>
+      <div class="plantilla-fecha">
+        <span>Fecha:</span>
+        <!-- Lógica: agregar fecha cuando se registre un nuevo gasto por el usuario  -->
+      </div>
+
+      <div class="plantilla-botones-accion">
+        <input class="btn-editar" type="button" value="Editar" />
+
+        <input class="btn-eliminar" type="button" value="Eliminar" />
+      </div>
+    </template>
+
+    <!-- MODAL EDITAR -->
+    <!-- Lógica: Modal de Editar (programar botones e inputs) -->
+    <aside class="contenedor-modal-editar">
+      <div class="modal-editar">
+        <div class="encabezado-editar">
+          <h2>Editar Gasto</h2>
+        </div>
+        <div class="formulario-editar">
+          <label>Nombre</label>
+          <input type="text" placeholder="Editar nombre del gasto" />
+        </div>
+        <div class="formulario-editar">
+          <label>Monto</label>
+          <input type="text" placeholder="Editar monto $" />
+        </div>
+        <br />
+        <button class="btn-guargar-editar">Guardar Cambios</button>
+        <button class="btn-cancelar-editar">Cancelar</button>
+      </div>
+    </aside>
+
+    <!-- MODAL ELIMINAR -->
+    <!-- Lógica: Modal de Eliminar (programar botones) -->
+    <aside class="contenedor-modal-eliminar">
+      <div class="modal-eliminar">
+        <div class="encabezado-eliminar">
+          <h2>¿Deseas eliminar el siguiente gasto?</h2>
+        </div>
+        <div>
+          <!-- Lógica: Mostrar elementos del gasto credo por el usuario -->
+        </div>
+        <button class="btn-eliminar-eliminar">Eliminar Gasto</button>
+        <button class="btn-cancelar-eliminar">Cancelar</button>
+      </div>
+    </aside>
+    <script src="main.js" type="module"></script>
+  </body>
+</html>
