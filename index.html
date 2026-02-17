@@ -30,7 +30,7 @@
           <h2>Agregar Nuevo Gasto</h2>
           <p class="mensaje-exito">Gasto agregado correctamente</p>
           <!-- Lógica: variable que hace referencia al DOM "formulario-gastos". -->
-          <form class="formulario-gastos" autocomplete="off">
+          <form id="formulario-gasto" class="formulario" autocomplete="off">
             <div class="formulario-grid">
               <div class="formulario-campo">
                 <label>Nombre del Gasto</label>
@@ -88,12 +88,10 @@
         </article>
 
         <!-- LISTA DE GASTOS UI -->
-        <!-- Lógica: mostrar mensaje cuando no exista ningún gasto. Y ocultar cuando exista el primer gasto agregado -->
         <article class="tarjeta">
           <h2>Lista de Gastos</h2>
           <div class="lista-gastos">
-            <!-- Lógica: si no hay gastos, mostrar mensaje. Si se inserta el primer gasto, desaparece mensaje, y agregamos plantilla de gastos en este div -->
-            <div class="estado-lista">
+            <div class="estado-vacio">
               <p>No hay gastos registrados.</p>
             </div>
           </div>
@@ -130,25 +128,24 @@
     </main>
 
     <!-- PLANTILLA QUE SE RENDERIZARA EN EL DOM -->
-    <!-- Lógica: variable que hace referencia al DOM "plantilla-fila-gastos", cambiar referencia a "contenedor-plantilla-gastos". Lo mismo hacemos para su contenido en las clases-->
-    <template class="contenedor-plantilla">
-      <div class="plantilla-nombre">
-        <span>Nombre:</span>
-        <!-- Lógica: agregar nombre del producto que ingresa el usuario-->
-      </div>
-      <div class="plantilla-monto">
-        <span>Monto:</span>
-        <!-- Lógica: agregar monto del producto que ingresa el usuario -->
-      </div>
-      <div class="plantilla-fecha">
-        <span>Fecha:</span>
-        <!-- Lógica: agregar fecha cuando se registre un nuevo gasto por el usuario  -->
-      </div>
-
-      <div class="plantilla-botones-accion">
-        <input class="btn-editar" type="button" value="Editar" />
-
-        <input class="btn-eliminar" type="button" value="Eliminar" />
+    <template class="plantilla">
+      <div class="item-gasto">
+        <div class="nombre-gasto">
+          <span class="etiqueta-movil">Nombre:</span>
+          <span class="texto-nombre"></span>
+        </div>
+        <div class="monto-gasto">
+          <span class="etiqueta-movil">Monto:</span>
+          <span class="texto-monto"></span>
+        </div>
+        <div class="fecha-gasto">
+          <span class="etiqueta-movil">Fecha:</span>
+          <span class="texto-fecha"></span>
+        </div>
+        <div class="btns-accion-gasto">
+          <input class="btn-editar" type="button" value="Editar" />
+          <input class="btn-eliminar" type="button" value="Eliminar" />
+        </div>
       </div>
     </template>
 
