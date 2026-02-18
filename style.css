@@ -193,29 +193,39 @@ body {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/*ESTILOS DE ETIQUETA SPAN PARA VALIDACIÓN DE FORMULUARIO */
 .mensaje-error {
   color: var(--color-peligro);
   font-size: 0.875rem;
   margin-top: 0.25rem;
-  /* display: none; */
+  display: none;
+  transition: all 800ms ease;
 }
 
 /* Lógica: mostrar mensaje si no pasa las validaciones el formulario */
-/* .mensaje-error.activo {
+.mensaje-error.activar-error {
   display: block;
-} */
+  animation: mostrarError 1s 1 normal 0s ease-out both;
+}
 
 /* Lógica: mostrar en inputs error, si no pasa las validaciones el formulario */
-/* .formulario-campo > input.activo {
-  border-color: #dc2626;
-} */
-
-/* .formulario-campo > input.activo:focus {
+.formulario-campo > input.activar-error[required]:invalid {
   border-color: #dc2626;
   box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-} */
+}
 
+@keyframes mostrarError {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+/* Lógica: mostrar mensaje al agregar un nuevo gasto*/
 .mensaje-exito {
   background: #d1fae5;
   color: #065f46;
