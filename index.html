@@ -54,7 +54,6 @@
                   type="text"
                   name="monto"
                   pattern="^[0-9]*[1-9][0-9]*(\.[0-9]+)?$"
-                  ;
                   placeholder="Monto $"
                   required
                 />
@@ -157,37 +156,63 @@
 
     <!-- MODAL EDITAR -->
     <!-- Lógica: Modal de Editar (programar botones e inputs) -->
-    <aside class="contenedor-modal-editar">
-      <div class="modal-editar">
-        <div class="encabezado-editar">
+    <aside id="modal-editar" class="modal">
+      <div class="contenido-modal">
+        <header class="encabezado-modal">
           <h2>Editar Gasto</h2>
-        </div>
-        <div class="formulario-editar">
-          <label>Nombre</label>
-          <input type="text" placeholder="Editar nombre del gasto" />
-        </div>
-        <div class="formulario-editar">
-          <label>Monto</label>
-          <input type="text" placeholder="Editar monto $" />
-        </div>
-        <br />
-        <button class="btn-guargar-editar">Guardar Cambios</button>
-        <button class="btn-cancelar-editar">Cancelar</button>
+        </header>
+        <section class="cuerpo-modal">
+          <div class="formulario-campo">
+            <label>Nombre</label>
+            <input
+              class="nombre"
+              type="text"
+              name="nombre"
+              placeholder="Nombre de gasto"
+              pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$"
+              required
+            />
+            <span class="mensaje-error"
+              >El nombre debe tener al menos 3 caracteres. Solo se admite
+              texto</span
+            >
+          </div>
+          <div class="formulario-campo">
+            <label>Monto</label>
+            <input
+              class="monto"
+              type="text"
+              name="monto"
+              placeholder="Monto $"
+              pattern="^[0-9]*[1-9][0-9]*(\.[0-9]+)?$"
+              required
+            />
+            <span class="mensaje-error"
+              >El monto debe ser mayor a 0.Solo admite números</span
+            >
+          </div>
+        </section>
+        <footer class="pie-modal">
+          <button class="btn-guargar">Guardar Cambios</button>
+          <button class="btn-cancelar">Cancelar</button>
+        </footer>
       </div>
     </aside>
 
     <!-- MODAL ELIMINAR -->
     <!-- Lógica: Modal de Eliminar (programar botones) -->
-    <aside class="contenedor-modal-eliminar">
-      <div class="modal-eliminar">
-        <div class="encabezado-eliminar">
+    <aside id="modal-eliminar" class="modal-eliminar">
+      <div class="contenido-modal-eliminar">
+        <header class="encabezado-modal-eliminar">
           <h2>¿Deseas eliminar el siguiente gasto?</h2>
-        </div>
+        </header>
         <div>
           <!-- Lógica: Mostrar elementos del gasto credo por el usuario -->
         </div>
-        <button class="btn-eliminar-eliminar">Eliminar Gasto</button>
-        <button class="btn-cancelar-eliminar">Cancelar</button>
+        <footer class="pie-modal-eliminar">
+          <button class="btn-modal-eliminar">Eliminar Gasto</button>
+          <button class="btn-modal-cancelar">Cancelar</button>
+        </footer>
       </div>
     </aside>
     <script src="main.js" type="module"></script>
