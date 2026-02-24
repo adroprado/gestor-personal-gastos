@@ -105,26 +105,26 @@
 
       <!-- TABLA DE ESTADÍSTICAS -->
       <section id="estadisticas" class="contenido-pestaña">
-        <article class="estadisticas">
+        <article class="tarjeta">
           <h2>Gastos Mensuales</h2>
           <!-- Lógica: colocar los valores totales de cada tarjeta -->
           <div class="estadisticas-grid">
-            <div class="estadistica-tarjeta-azul">
-              <p class="estadistica-texto-azul">Total General</p>
-              <p class="estadistica-monto-azul">$0.00</p>
+            <div class="tarjeta-estadistica estadistica-azul">
+              <p class="estadistica-texto">Total General</p>
+              <p class="estadistica-valor">$0.00</p>
             </div>
-            <div class="estadistica-tarjeta-verde">
-              <p class="estadistica-texto-verde">Promedio Mensual</p>
-              <p class="estadistica-promedio-mensual-verde">$0.00</p>
+            <div class="tarjeta-estadistica estadistica-verde">
+              <p class="estadistica-texto">Promedio Mensual</p>
+              <p class="estadistica-valor">$0.00</p>
             </div>
-            <div class="estadistica-tarjeta-morada">
-              <p class="estadistica-texto-morada">Total Gastos</p>
-              <p class="estadistica-gastos-morada">0</p>
+            <div class="tarjeta-estadistica estadistica-morada">
+              <p class="estadistica-texto">Total Gastos</p>
+              <p class="estadistica-valor">0</p>
             </div>
           </div>
           <!-- Lógica: emplear librería Chart.js -->
-          <canvas class="chartCanvas"></canvas>
-          <div class="chart-estado-vacio">
+          <canvas class="grafica-canvas"></canvas>
+          <div class="estado-vacio">
             <!-- Lógica: si no hay gastos, mostrar mensaje. Si se inserta el primer gasto, desaparece mensaje, y agregamos estadísticas de gastos en este div -->
             <p>No hay datos para mostrar.</p>
           </div>
