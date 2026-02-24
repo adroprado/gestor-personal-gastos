@@ -175,8 +175,10 @@ body {
 }
 
 .informacion-registros {
-  font-size: 2.5rem;
-  font-weight: 700;
+  /* font-size: 2.5rem;
+  font-weight: 700; */
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 /* ===== FORMULARIO INGRESO DE GASTO Y MODAL EDITAR ===== */
@@ -440,7 +442,6 @@ body {
 }
 
 .tarjeta-estadistica {
-  border: thin solid red;
   padding: 1rem;
   border-radius: 0.75rem;
 }
@@ -592,144 +593,6 @@ URGENTE: VER LA MANERA DE ORGANIZAR ESTOS ESTILOS.
 }
 
 .btn-cancelar:hover {
-  background: #d1d5db;
-}
-
-/* ===== MODAL ELIMINAR ===== */
-
-/* Lógica: mostrar modal de editar */
-.modal-eliminar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  display: none;
-}
-
-/* Anteriormente tenía el diplay flex para la misma etiqueta de arrib, pero por separado. Lo coloque arriba. */
-.modal.activar-modal {
-  display: flex;
-}
-
-.contenido-modal-eliminar {
-  background: var(--color-fondo);
-  border-radius: var(--radio-borde-grande);
-  width: 90%;
-  max-width: 500px;
-  box-shadow: var(--sombra-xl);
-  animation: subirModal 0.3s ease;
-}
-
-@keyframes subirModal {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.encabezado-modal-eliminar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem;
-  border-bottom: 2px solid var(--color-borde);
-}
-
-.encabezado-modal-eliminar > h2 {
-  font-size: 1.5rem;
-  color: var(--color-texto);
-  margin: 0;
-}
-
-.cuerpo-modal {
-  padding: 1.5rem;
-}
-
-/* Los estilos de "formulario-editar" del modal editar, el proyecto los nombra como "grupo-formulario". Estos estilos están repetidos, tanto para "formulario-campo " del formulario de agregar gasto; en la sección de estilos FORMULARIO. 
-
-URGENTE: VER LA MANERA DE ORGANIZAR ESTOS ESTILOS. */
-.formulario-editar {
-  display: flex;
-  flex-direction: column;
-}
-
-.formulario-editar > label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-texto);
-  margin-bottom: 0.5rem;
-}
-
-.formulario-editar > input {
-  padding: 0.75rem 1rem;
-  border: 2px solid var(--color-borde);
-  border-radius: var(--radio-borde);
-  font-size: 1rem;
-  transition: var(--transicion);
-}
-
-.formulario-editar > input:focus {
-  outline: none;
-  border-color: var(--color-primario);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.pie-modal-eliminar {
-  padding: 1.5rem;
-  border-top: 2px solid var(--color-borde);
-  display: flex;
-  gap: 1rem;
-  justify-content: flex-end;
-}
-
-.btn-modal-eliminar {
-  padding: 0.75rem 1.5rem;
-  background: #fef2f2;
-  color: var(--color-peligro);
-  border: none;
-  /* border: 2px solid #fecaca; */
-  border-radius: var(--radio-borde);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transicion);
-}
-
-.btn-modal-eliminar:hover {
-  background: #fee2e2;
-
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-}
-
-.btn-modal-eliminar:active {
-  transform: translateY(0);
-}
-
-/*Los estilos de "btn-cancelar" del modal editar, el proyecto los nombra como "boton-secunadrio."*/
-.btn-modal-cancelar {
-  padding: 0.75rem 1.5rem;
-  background: var(--color-fondo-gris);
-  color: var(--color-texto);
-  border: none;
-  border-radius: var(--radio-borde);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transicion);
-}
-
-.btn-modal-cancelar:hover {
   background: #d1d5db;
 }
 
