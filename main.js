@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', (e) => {
   menuNavegacion('.btn-pestaña-gastos', '.btn-pestaña-estadisticas');
   formularioGasto(
     '.mensaje-exito',
-    '.lista-gastos',
+    '.contenedor-elementos',
+    '.estado-vacio',
     '.informacion-monto',
     '.informacion-registros',
     '.plantilla',
