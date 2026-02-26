@@ -1,6 +1,7 @@
 export default function formularioGasto(
   mensajeExito,
-  lista,
+  contenedorItems,
+  mensajeVacio,
   totalGastos,
   totalRegistros,
   plantilla,
@@ -8,6 +9,8 @@ export default function formularioGasto(
   const d = document;
   // --- Referencias al DOM ---
   const $formulario = d.getElementById('formulario-gasto'),
+    $contenedorItems = d.querySelector(contenedorItems),
+    $mensajeVacio = d.querySelector(mensajeVacio),
     $plantilla = d.querySelector(plantilla).content,
     $fragmento = d.createDocumentFragment();
 
@@ -52,12 +55,18 @@ export default function formularioGasto(
 
   // Renderiza la tabla en el DOM (UI) y calcula el total. Y muestra mensaje, si no existe ningún gasto registrado (agregado)
   const actualizarInterfazGastos = () => {
+    // 1. Limpiamos SIEMPRE el contenedor de los items (el cajón)
+    $contenedorItems.innerHTML = '';
     if (listaDeGastos.length === 0) {
-      // console.log('No hay gastos registrados ;)');
-      return null;
+      // 2. Si no hay ningún gasto, mostramos el mensaje
+      $mensajeVacio.classList.remove('oculto');
+      // Reseteamos tarjeta información de gastos
+      d.querySelector(totalGastos).textContent = formateadorMoneda.format(0);
+      d.querySelector(totalRegistros).textContent = 0;
     } else {
-      // Limpia el contenido actual de la tabla para evitar duplicados
-      d.querySelector(lista).innerHTML = '';
+      // 3. Si hay gastos, escondemos el letrero y dibujamos
+      $mensajeVacio.classList.add('oculto');
+
       listaDeGastos.forEach((gasto) => {
         let $clonFila = document.importNode($plantilla, true);
         $clonFila.querySelector('.texto-nombre').textContent = gasto.nombre;
@@ -69,7 +78,7 @@ export default function formularioGasto(
         $clonFila.querySelector('.btn-eliminar').dataset.id = gasto.id;
         $fragmento.appendChild($clonFila);
       });
-      d.querySelector(lista).appendChild($fragmento);
+      $contenedorItems.appendChild($fragmento);
 
       // Cálculo y renderizado del total
       const sumaTotal = listaDeGastos.reduce((acumulador, gasto) => {
