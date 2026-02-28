@@ -39,12 +39,11 @@
                   type="text"
                   name="nombre"
                   placeholder="Nombre de gasto"
-                  pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$"
+                  pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü0-9\s]{3,}$"
                   required
                 />
                 <span class="mensaje-error"
-                  >El nombre debe tener al menos 3 caracteres. Solo se admite
-                  texto</span
+                  >El nombre debe tener al menos 3 caracteres.</span
                 >
               </div>
               <div class="formulario-campo">
@@ -57,9 +56,7 @@
                   placeholder="Monto $"
                   required
                 />
-                <span class="mensaje-error"
-                  >El monto debe ser mayor a 0.Solo admite números</span
-                >
+                <span class="mensaje-error">El monto debe ser mayor a 0.</span>
               </div>
             </div>
             <input class="btn-agregar" type="submit" value="+ Agregar Gasto" />
