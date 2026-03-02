@@ -562,7 +562,7 @@ body {
 
 URGENTE: VER LA MANERA DE ORGANIZAR ESTOS ESTILOS. 
 */
-.btn-guargar {
+.btn-guardar {
   padding: 0.75rem 1.5rem;
   background: var(--color-primario);
   color: var(--color-fondo);
@@ -574,13 +574,13 @@ URGENTE: VER LA MANERA DE ORGANIZAR ESTOS ESTILOS.
   transition: var(--transicion);
 }
 
-.btn-guargar:hover {
+.btn-guardar:hover {
   background: var(--color-primario-hover);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
-.btn-guargar:active {
+.btn-guardar:active {
   transform: translateY(0);
 }
 
