@@ -11,6 +11,7 @@ export default function formularioGasto(
   const $formulario = d.getElementById('formulario-gasto'),
     $contenedorItems = d.querySelector(contenedorItems),
     $mensajeVacio = d.querySelector(mensajeVacio),
+    $modalEditar = d.getElementById('modal-editar'),
     $plantilla = d.querySelector(plantilla).content,
     $fragmento = d.createDocumentFragment();
 
@@ -94,23 +95,49 @@ export default function formularioGasto(
   };
   actualizarInterfazGastos();
 
-  // Prepara el formulario para editar un gasto existente
+  // Prepara el modal para editar un gasto existente
   const prepararEdicionGasto = (e) => {
     if (e.target.matches('.btn-editar')) {
-      document.querySelector('h2').textContent = 'Editar Gasto';
+      $modalEditar.classList.add('activar-modal');
 
       // Obteniendo id del dataset que le pasmos al botón "Editar"
       const ID_SELECCIONADO = Number(e.target.dataset.id);
 
       listaDeGastos.find((gastoEncontrado) => {
         if (gastoEncontrado.id === ID_SELECCIONADO) {
-          // .nombre, .monto, .id. No esta accediendo a la clase, esta obteniendo como referencia el atributo "name", para agregarle el valor
-
-          $formulario.nombre.value = gastoEncontrado.nombre;
-          $formulario.monto.value = gastoEncontrado.cantidad;
-          $formulario.id.value = gastoEncontrado.id;
+          $modalEditar.querySelector('.nombre').value = gastoEncontrado.nombre;
+          $modalEditar.querySelector('.monto').value = gastoEncontrado.cantidad;
+          $modalEditar.querySelector('[name="id"]').value = gastoEncontrado.id;
         }
       });
+    }
+  };
+
+  // Actualiza elemento a editar
+  const guardarMontoEditar = (e) => {
+    if (e.target.matches('.btn-guardar')) {
+      // Obteniendo el id del elementos a editar en cuestión.
+      const ID_ACTUAL = Number($modalEditar.querySelector('[name="id"]').value);
+
+      // Modo: Editar (Inmutabilidad)
+      const elementoAEditar = listaDeGastos.map((gasto) =>
+        gasto.id === ID_ACTUAL
+          ? {
+              ...gasto,
+              nombre: $modalEditar.querySelector('.nombre').value,
+              cantidad: $modalEditar.querySelector('.monto').value,
+            }
+          : gasto,
+      );
+
+      listaDeGastos = elementoAEditar;
+
+      guardarGastosEnLocal();
+      actualizarInterfazGastos();
+      $modalEditar.querySelector('.nombre').value = '';
+      $modalEditar.querySelector('.monto').value = '';
+      $modalEditar.querySelector("input[name='id']").value = '';
+      $modalEditar.classList.remove('activar-modal');
     }
   };
 
@@ -134,39 +161,22 @@ export default function formularioGasto(
   $formulario.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // const ID_ACTUAL = e.target.elements.id.value;
     const ID_ACTUAL = Number(e.target.elements.id.value);
 
-    //Si el id oculto no tiene valor, vamos a registrarGastoEnMemoria, de lo contrario prepararEdicionGasto.
+    //Si el id oculto no tiene valor, vamos a registrarGastoEnMemoria
     if (!ID_ACTUAL) {
       // Modo: Crear
       registrarGastoEnMemoria();
       guardarGastosEnLocal();
       actualizarInterfazGastos();
-    } else {
-      // Modo: Editar (Inmutabilidad)
-      const elementoAEditar = listaDeGastos.map((gasto) =>
-        gasto.id === ID_ACTUAL
-          ? {
-              ...gasto,
-              nombre: document.querySelector('.nombre').value,
-              cantidad: document.querySelector('.monto').value,
-            }
-          : gasto,
-      );
-      listaDeGastos = elementoAEditar;
-
-      // Resetear visualmente el formulario
-      guardarGastosEnLocal();
-      actualizarInterfazGastos();
-      $formulario.reset();
-      document.querySelector('h2').textContent = 'Agregar Gasto';
-      $formulario.querySelector("input[name='id']").value = '';
     }
   });
 
   document.addEventListener('click', (e) => {
+    if (e.target.matches('.btn-cancelar'))
+      $modalEditar.classList.remove('activar-modal');
     prepararEdicionGasto(e);
+    guardarMontoEditar(e);
     eliminarGastoDeLista(e);
   });
 }
