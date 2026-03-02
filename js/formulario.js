@@ -114,7 +114,7 @@ export default function formularioGasto(
   };
 
   // Actualiza elemento a editar
-  const guardarMontoEditar = (e) => {
+  const guardarEdicion = (e) => {
     if (e.target.matches('.btn-guardar')) {
       // Obteniendo el id del elementos a editar en cuestión.
       const ID_ACTUAL = Number($modalEditar.querySelector('[name="id"]').value);
@@ -176,7 +176,7 @@ export default function formularioGasto(
     if (e.target.matches('.btn-cancelar'))
       $modalEditar.classList.remove('activar-modal');
     prepararEdicionGasto(e);
-    guardarMontoEditar(e);
+    guardarEdicion(e);
     eliminarGastoDeLista(e);
   });
 }
