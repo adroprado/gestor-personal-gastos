@@ -29,7 +29,6 @@
         <article class="tarjeta">
           <h2>Agregar Nuevo Gasto</h2>
           <p class="mensaje-exito">Gasto agregado correctamente</p>
-          <!-- Lógica: variable que hace referencia al DOM "formulario-gastos". -->
           <form id="formulario-gasto" class="formulario" autocomplete="off">
             <div class="formulario-grid">
               <div class="formulario-campo">
@@ -68,7 +67,6 @@
         <article class="tarjeta informacion-total">
           <div class="informacion-tarjeta">
             <div>
-              <!-- Lógica: variable que hace referencia al DOM "total-gastos", cambiar referencia a "total-gastos-monto" -->
               <p class="informacion-texto">Total de Gastos</p>
               <p class="informacion-monto">0</p>
             </div>
@@ -81,11 +79,10 @@
         </article>
 
         <!-- BUSCADOR DE GASTOS -->
-        <!-- Lógica: el usuario puede buscar gastos por texto -->
         <article class="tarjeta">
           <div class="buscador-campo">
             <span class="buscador-icono">🔍</span>
-            <input type="text" placeholder="Buscar gasto..." />
+            <input id="buscador" type="text" placeholder="Buscar gasto..." />
           </div>
         </article>
 
@@ -153,7 +150,6 @@
     </template>
 
     <!-- MODAL EDITAR -->
-    <!-- Lógica: Modal de Editar (programar botones e inputs) -->
     <aside id="modal-editar" class="modal">
       <div class="contenido-modal">
         <header class="encabezado-modal">
