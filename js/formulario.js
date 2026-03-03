@@ -12,6 +12,7 @@ export default function formularioGasto(
     $contenedorItems = d.querySelector(contenedorItems),
     $mensajeVacio = d.querySelector(mensajeVacio),
     $modalEditar = d.getElementById('modal-editar'),
+    $buscador = d.getElementById('buscador'),
     $plantilla = d.querySelector(plantilla).content,
     $fragmento = d.createDocumentFragment();
 
@@ -54,21 +55,22 @@ export default function formularioGasto(
   };
   cargarGastosEnLocal();
 
-  // Renderiza la tabla en el DOM (UI) y calcula el total. Y muestra mensaje, si no existe ningún gasto registrado (agregado)
-  const actualizarInterfazGastos = () => {
-    // 1. Limpiamos SIEMPRE el contenedor de los items (el cajón)
+  // Renderiza la tabla en el DOM (UI) o el gasto a Buscar. Calcula el total. Muestra mensaje, si no existe ningún gasto registrado (agregado) o si el gasto a buscar no existe.
+  // Si tú envías algo: La función usa lo que tú le mandaste (en este caso, tu lista filtrada filtrarGasto). Si NO envías nada: La función dice: "Bueno, no me dieron instrucciones, así que usaré la listaDeGastos completa por defecto".
+  const actualizarInterfazGastos = (datosAMostrar = listaDeGastos) => {
+    // Limpiamos SIEMPRE el contenedor de los items (el cajón)
     $contenedorItems.innerHTML = '';
-    if (listaDeGastos.length === 0) {
-      // 2. Si no hay ningún gasto, mostramos el mensaje
+    if (datosAMostrar.length === 0) {
+      // Si no hay ningún gasto, mostramos el mensaje
       $mensajeVacio.classList.remove('oculto');
       // Reseteamos tarjeta información de gastos
       d.querySelector(totalGastos).textContent = formateadorMoneda.format(0);
       d.querySelector(totalRegistros).textContent = 0;
     } else {
-      // 3. Si hay gastos, escondemos el letrero y dibujamos
+      // Si hay gastos, escondemos el letrero y dibujamos
       $mensajeVacio.classList.add('oculto');
 
-      listaDeGastos.forEach((gasto) => {
+      datosAMostrar.forEach((gasto) => {
         let $clonFila = document.importNode($plantilla, true);
         $clonFila.querySelector('.texto-nombre').textContent = gasto.nombre;
         $clonFila.querySelector('.texto-monto').textContent =
@@ -82,14 +84,14 @@ export default function formularioGasto(
       $contenedorItems.appendChild($fragmento);
 
       // Cálculo y renderizado del total
-      const sumaTotal = listaDeGastos.reduce((acumulador, gasto) => {
+      const sumaTotal = datosAMostrar.reduce((acumulador, gasto) => {
         return (acumulador += parseFloat(gasto.cantidad));
       }, 0);
       d.querySelector(totalGastos).textContent =
         formateadorMoneda.format(sumaTotal);
 
       // Cantidad y renderizado de registros
-      const registroTotal = listaDeGastos.length;
+      const registroTotal = datosAMostrar.length;
       d.querySelector(totalRegistros).textContent = registroTotal;
     }
   };
@@ -156,6 +158,15 @@ export default function formularioGasto(
     }
   };
 
+  const buscarGasto = () => {
+    const terminoBusqueda = $buscador.value.toLowerCase();
+
+    const filtrarGasto = listaDeGastos.filter((gasto) =>
+      gasto.nombre.toLowerCase().includes(terminoBusqueda),
+    );
+    actualizarInterfazGastos(filtrarGasto);
+  };
+
   // --- Eventos de Usuario ---
 
   $formulario.addEventListener('submit', (e) => {
@@ -172,11 +183,15 @@ export default function formularioGasto(
     }
   });
 
-  document.addEventListener('click', (e) => {
+  d.addEventListener('click', (e) => {
     if (e.target.matches('.btn-cancelar'))
       $modalEditar.classList.remove('activar-modal');
     prepararEdicionGasto(e);
     guardarEdicion(e);
     eliminarGastoDeLista(e);
+  });
+
+  d.addEventListener('keyup', () => {
+    buscarGasto();
   });
 }
