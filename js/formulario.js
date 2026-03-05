@@ -5,6 +5,8 @@ export default function formularioGasto(
   totalGastos,
   totalRegistros,
   plantilla,
+  lienzoGrafica,
+  mensajeVacioEstadistica,
 ) {
   const d = document;
   // --- Referencias al DOM ---
@@ -14,7 +16,12 @@ export default function formularioGasto(
     $modalEditar = d.getElementById('modal-editar'),
     $buscador = d.getElementById('buscador'),
     $plantilla = d.querySelector(plantilla).content,
-    $fragmento = d.createDocumentFragment();
+    $fragmento = d.createDocumentFragment(),
+    $canvaGrafica = d.querySelector(lienzoGrafica),
+    $totalGeneral = d.getElementById('total-general'),
+    $promedioMensual = d.getElementById('promedio-mensual'),
+    $totalGastos = d.getElementById('total-gastos'),
+    $mensajeVacioEstadistica = d.querySelector(mensajeVacioEstadistica);
 
   // --- Variables Globales ---
   const ls = localStorage;
@@ -54,6 +61,36 @@ export default function formularioGasto(
     listaDeGastos = datosRecuperados || [];
   };
   cargarGastosEnLocal();
+
+  // --- Funciones de Lógica - Tabla Estadísticas ---
+  const calcularEstadisticas = () => {
+    if (listaDeGastos.length === 0) {
+      $canvaGrafica.classList.add('oculto');
+      $mensajeVacioEstadistica.classList.remove('oculto');
+      // Reseteamos tarjeta información de gastos
+      $totalGeneral.textContent = formateadorMoneda.format(0);
+      $totalGastos.textContent = 0;
+      $promedioMensual.textContent = formateadorMoneda.format(0);
+    } else {
+      $canvaGrafica.classList.remove('oculto');
+      $mensajeVacioEstadistica.classList.add('oculto');
+      // Cálculo total de gastos y renderizado del total
+      const totalGeneral = listaDeGastos.reduce((acumulador, gasto) => {
+        return (acumulador += parseFloat(gasto.cantidad));
+      }, 0);
+      $totalGeneral.textContent = formateadorMoneda.format(totalGeneral);
+
+      // Cantidad de gastos y renderizado de registros
+      const totalGastos = listaDeGastos.length;
+      $totalGastos.textContent = totalGastos;
+
+      // Promedio mensual de gastos y renderizado del total
+      const promedioMensual = totalGeneral / totalGastos;
+      $promedioMensual.textContent = formateadorMoneda.format(promedioMensual);
+    }
+  };
+
+  calcularEstadisticas();
 
   // Renderiza la tabla en el DOM (UI) o el gasto a Buscar. Calcula el total. Muestra mensaje, si no existe ningún gasto registrado (agregado) o si el gasto a buscar no existe.
   // Si tú envías algo: La función usa lo que tú le mandaste (en este caso, tu lista filtrada filtrarGasto). Si NO envías nada: La función dice: "Bueno, no me dieron instrucciones, así que usaré la listaDeGastos completa por defecto".
@@ -140,6 +177,7 @@ export default function formularioGasto(
       $modalEditar.querySelector('.monto').value = '';
       $modalEditar.querySelector("input[name='id']").value = '';
       $modalEditar.classList.remove('activar-modal');
+      calcularEstadisticas();
     }
   };
 
@@ -155,6 +193,7 @@ export default function formularioGasto(
       });
       guardarGastosEnLocal();
       actualizarInterfazGastos();
+      calcularEstadisticas();
     }
   };
 
@@ -180,6 +219,7 @@ export default function formularioGasto(
       registrarGastoEnMemoria();
       guardarGastosEnLocal();
       actualizarInterfazGastos();
+      calcularEstadisticas();
     }
   });
 
