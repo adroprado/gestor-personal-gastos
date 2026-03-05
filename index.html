@@ -106,21 +106,20 @@
           <div class="estadisticas-grid">
             <div class="tarjeta-estadistica estadistica-azul">
               <p class="estadistica-texto">Total General</p>
-              <p class="estadistica-valor">$0.00</p>
+              <p id="total-general" class="estadistica-valor">$0.00</p>
             </div>
             <div class="tarjeta-estadistica estadistica-verde">
               <p class="estadistica-texto">Promedio Mensual</p>
-              <p class="estadistica-valor">$0.00</p>
+              <p id="promedio-mensual" class="estadistica-valor">$0.00</p>
             </div>
             <div class="tarjeta-estadistica estadistica-morada">
               <p class="estadistica-texto">Total Gastos</p>
-              <p class="estadistica-valor">0</p>
+              <p id="total-gastos" class="estadistica-valor">0</p>
             </div>
           </div>
           <!-- Lógica: emplear librería Chart.js -->
           <canvas class="grafica-canvas"></canvas>
-          <div class="estado-vacio">
-            <!-- Lógica: si no hay gastos, mostrar mensaje. Si se inserta el primer gasto, desaparece mensaje, y agregamos estadísticas de gastos en este div -->
+          <div class="estado-vacio mensaje-estadistica">
             <p>No hay datos para mostrar.</p>
           </div>
         </article>
