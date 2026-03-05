@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', (e) => {
     '.informacion-monto',
     '.informacion-registros',
     '.plantilla',
+    '.grafica-canvas',
+    '.mensaje-estadistica',
   );
   formValidaciones();
 });
