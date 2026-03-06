@@ -28,6 +28,7 @@ export default function formularioGasto(
   let listaDeGastos = [];
   let configuracionMoneda = { style: 'currency', currency: 'MXN' },
     formateadorMoneda = new Intl.NumberFormat('es-MX', configuracionMoneda);
+  let miGrafica;
 
   // --- Funciones de Lógica ---
 
@@ -91,6 +92,73 @@ export default function formularioGasto(
   };
 
   calcularEstadisticas();
+
+  const calcularDatosMensuales = () => {
+    const datosPorMes = new Map();
+    // el id lo establecemos como una fecha entendible para el humano
+    listaDeGastos.forEach((gasto) => {
+      const fecha = new Date(gasto.id); // convirtiendo id en un objeto de tiempo real
+      const claveMes = fecha.toLocaleDateString('es-Es', {
+        // Extracción de mes y año
+        mes: 'short',
+        año: 'numeric',
+      });
+
+      const totalActual = datosPorMes.get(claveMes) || 0;
+      datosPorMes.set(claveMes, totalActual + parseFloat(gasto.cantidad));
+    });
+
+    return Array.from(datosPorMes.entries()).map(([mes, total]) => ({
+      mes,
+      total,
+    }));
+  };
+
+  const dibujarGrafica = () => {
+    if (miGrafica) {
+      miGrafica.destroy();
+      miGrafica = null;
+    }
+
+    if (listaDeGastos.length === 0) return;
+
+    const datosGrafica = calcularDatosMensuales();
+
+    datosGrafica.sort((a, b) => {
+      return new Date(a.mes).getTime() - new Date(b.mes).getTime();
+    });
+
+    const etiquetaMesEjeX = datosGrafica.map((item) => item.mes);
+    const etiquetaTotalEjeY = datosGrafica.map((item) => item.total);
+
+    miGrafica = new Chart($canvaGrafica, {
+      type: 'bar', // Puede ser 'line', 'pie', 'bar', etc. 📊
+      data: {
+        labels: etiquetaMesEjeX, // Tus meses ordenados
+        datasets: [
+          {
+            //label: 'Gastos por Mes',
+            label: formateadorMoneda.format(etiquetaTotalEjeY),
+            data: etiquetaTotalEjeY, // Tus montos sumados
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            // backgroundColor: 'rgba(147, 51, 234, 0.5)', // modo oscuro
+            // borderColor: 'rgba(147,51,234,1)', // modo oscuro
+            borderWidth: 2,
+          },
+        ],
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: {
+            beginAtZero: true, // Asegura que el eje Y empiece en 0
+          },
+        },
+      },
+    });
+  };
+  dibujarGrafica();
 
   // Renderiza la tabla en el DOM (UI) o el gasto a Buscar. Calcula el total. Muestra mensaje, si no existe ningún gasto registrado (agregado) o si el gasto a buscar no existe.
   // Si tú envías algo: La función usa lo que tú le mandaste (en este caso, tu lista filtrada filtrarGasto). Si NO envías nada: La función dice: "Bueno, no me dieron instrucciones, así que usaré la listaDeGastos completa por defecto".
@@ -178,6 +246,7 @@ export default function formularioGasto(
       $modalEditar.querySelector("input[name='id']").value = '';
       $modalEditar.classList.remove('activar-modal');
       calcularEstadisticas();
+      dibujarGrafica();
     }
   };
 
@@ -194,6 +263,7 @@ export default function formularioGasto(
       guardarGastosEnLocal();
       actualizarInterfazGastos();
       calcularEstadisticas();
+      dibujarGrafica();
     }
   };
 
@@ -220,6 +290,7 @@ export default function formularioGasto(
       guardarGastosEnLocal();
       actualizarInterfazGastos();
       calcularEstadisticas();
+      dibujarGrafica();
     }
   });
 
