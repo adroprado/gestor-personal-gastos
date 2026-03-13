@@ -1,10 +1,10 @@
 // --- Importación de Módulos ---
-import menuNavegacion from './js/menu-navegacion.js';
+import { menuNavegacion } from './ui/gestion-ui.js';
 import formularioGasto from './js/formulario.js';
 import formValidaciones from './js/form-validaciones.js';
 // --- Ejecución de Código ---
 document.addEventListener('DOMContentLoaded', (e) => {
-  menuNavegacion('.btn-pestaña-gastos', '.btn-pestaña-estadisticas');
+  menuNavegacion();
   formularioGasto(
     '.mensaje-exito',
     '.contenedor-elementos',
