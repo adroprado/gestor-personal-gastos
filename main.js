@@ -1,10 +1,11 @@
 // --- Importación de Módulos ---
-import { menuNavegacion } from './ui/gestion-ui.js';
+import { menuNavegacion, formularioValidaciones } from './ui/gestion-ui.js';
 import formularioGasto from './js/formulario.js';
-import formValidaciones from './js/form-validaciones.js';
+
 // --- Ejecución de Código ---
 document.addEventListener('DOMContentLoaded', (e) => {
   menuNavegacion();
+  formularioValidaciones();
   formularioGasto(
     '.mensaje-exito',
     '.contenedor-elementos',
@@ -15,5 +16,4 @@ document.addEventListener('DOMContentLoaded', (e) => {
     '.grafica-canvas',
     '.mensaje-estadistica',
   );
-  formValidaciones();
 });
